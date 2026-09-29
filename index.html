@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <title>起司机</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <div id="screen">
+        <!-- 顶部视觉 -->
+        <div class="top-area">
+            <div class="glass-card">
+                <div class="brand-tag">起司机</div>
+            </div>
+            <div class="avatar-circle"></div>
+        </div>
+
+        <!-- 中间内容预留 -->
+        <div class="content-layer"></div>
+
+        <!-- 底部导航 -->
+        <div class="bottom-bar">
+            <div class="nav-icon"></div>
+            <div class="nav-icon"></div>
+            <div class="nav-icon" id="settings-btn"></div>
+        </div>
+
+        <!-- 全屏设置页面 -->
+        <div id="settings-page" class="full-page">
+            <div class="page-header">
+                <div id="close-settings" class="nav-text-btn">返回</div>
+                <div class="page-title">设置</div>
+            </div>
+
+            <div class="page-body">
+                <!-- A. 接口配置 -->
+                <div class="settings-section">
+                    <div class="section-label">神经链接 / Neural Link</div>
+                    <div class="glass-form">
+                        <input type="text" id="api-url" placeholder="接口地址 (URL)" />
+                        <input type="password" id="api-key" placeholder="密钥 (API KEY)" />
+
+                        <div class="model-selector">
+                            <select id="api-model-select">
+                                <option value="">-- 请先拉取模型 --</option>
+                            </select>
+                            <button class="btn-fetch primary" id="fetch-models-btn">拉取模型</button>
+                        </div>
+                        <div class="manual-model">
+                            <span class="manual-hint">或手动输入模型名称：</span>
+                            <input type="text" id="api-model-manual" placeholder="模型名称 (MODEL)" />
+                        </div>
+
+                        <button class="btn-save-main" id="save-config">保存配置</button>
+                    </div>
+                </div>
+
+                <!-- B. 功能开关 -->
+                <div class="settings-section">
+                    <div class="section-label">协议矩阵 / Protocol Matrix</div>
+                    <div class="glass-panel mcp-matrix">
+                        <div class="op-item master-row">
+                            <span class="label-bold">总控开关</span>
+                            <label class="switch">
+                                <input type="checkbox" id="mcp-master-toggle" checked />
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="divider-h"></div>
+                        <div id="mcp-sub-list" class="mcp-sub-list">
+                            <div class="op-item">
+                                <span>联网思考</span>
+                                <label class="switch">
+                                    <input type="checkbox" class="mcp-sub-toggle" data-mcp="researcher" checked />
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="op-item">
+                                <span>读取链接</span>
+                                <label class="switch">
+                                    <input type="checkbox" class="mcp-sub-toggle" data-mcp="scraper" checked />
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="op-item">
+                                <span>手机控制</span>
+                                <label class="switch">
+                                    <input type="checkbox" class="mcp-sub-toggle" data-mcp="system" checked />
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                            <div class="op-item" style="opacity:0.5; border-style:dashed;">
+                                <span>更多功能</span>
+                                <div style="font-size:10px; color:var(--text-sub);">COMING SOON</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- C. 数据备份（含一键部署按钮） -->
+                <div class="settings-section">
+                    <div class="section-label">数据备份</div>
+                    <div class="glass-folder" id="data-hub-folder">
+                        <div class="folder-header" id="folder-toggle">
+                            <span class="folder-title">数据中枢 (Data Hub)</span>
+                            <div class="folder-indicator"></div>
+                        </div>
+                        <div class="folder-content">
+                            <div class="sub-section">
+                                <div class="sub-label">GitHub 云端同步</div>
+                                <input type="password" id="gh-token" placeholder="GitHub Token (需 gist 权限)" />
+                                <input type="text" id="gist-id" placeholder="Gist ID (已有则填，留空自动创建)" />
+
+                                <!-- 新增：一键部署分享链接按钮 -->
+                                <div class="form-row" style="margin-top: 4px;">
+                                    <button class="btn-fetch flex-grow" id="copy-share-link" style="background: rgba(21, 101, 192, 0.1); color: var(--accent-blue);">
+                                        复制一键部署链接
+                                    </button>
+                                </div>
+
+                                <div class="form-row">
+                                    <button class="btn-fetch primary flex-grow" id="sync-push">备份到云端</button>
+                                    <button class="btn-fetch flex-grow" id="sync-pull">从云端恢复</button>
+                                </div>
+                            </div>
+                            <div class="divider-h"></div>
+                            <div class="sub-section">
+                                <div class="sub-label">本地备份码</div>
+                                <div class="form-row">
+                                    <button class="btn-fetch primary flex-grow" id="export-local">导出配置</button>
+                                    <button class="btn-fetch flex-grow" id="import-local">导入配置</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast 大气横幅 -->
+        <div id="toast"></div>
+
+        <!-- 隐藏的文件输入 -->
+        <input type="file" id="file-input" accept=".json" />
+    </div>
+
+    <script src="main.js"></script>
+</body>
+</html>
